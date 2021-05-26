@@ -27,31 +27,33 @@ module.exports = {
 
           worker.on("message", (data) => {
             if (!buffer[data.word]) {
-							buffer[data.word] = [];
-							buffer[data.word].push({
-								file: data.file,
-								index: data.index,
-							});
+              buffer[data.word] = [];
+              buffer[data.word].push({
+                file: data.file,
+                index: data.index,
+              });
             } else {
-							const existedDataIndex = buffer[data.word].findIndex(wordData => wordData.file === data.file)
-							if (existedDataIndex !== -1) {
-								const existedData = buffer[data.word][existedDataIndex]
-								existedData.index += `, ${data.index}`
-								buffer[data.word].splice(existedDataIndex, 1, existedData)
-							} else {
-								buffer[data.word].push({
-									file: data.file,
-									index: data.index,
-								});
-							} 
-						}
+              const existedDataIndex = buffer[data.word].findIndex(
+                (wordData) => wordData.file === data.file
+              );
+              if (existedDataIndex !== -1) {
+                const existedData = buffer[data.word][existedDataIndex];
+                existedData.index += `, ${data.index}`;
+                buffer[data.word].splice(existedDataIndex, 1, existedData);
+              } else {
+                buffer[data.word].push({
+                  file: data.file,
+                  index: data.index,
+                });
+              }
+            }
           });
 
           worker.on("error", (e) => console.log(e));
-          worker.on("exit", (code) => {
+          worker.on("exit", () => {
             counter--;
-            console.log("exit code:", code, Object.keys(buffer).length);
             if (counter === 0) {
+              console.log("All threads have finished working");
               resolve(buffer);
             }
           });
