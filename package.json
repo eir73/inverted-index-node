@@ -1,19 +1,28 @@
 {
-  "name": "course",
+  "name": "inverted-index-node",
   "version": "1.0.0",
-  "description": "",
+  "description": "Node.js client-server app for indexing files using worker_threads",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:server": "cd ./server && node server",
+    "start:client": "cd ./client && node client"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "async-mutex": "^0.3.1",
-    "express": "^4.17.1",
-    "fs-extra": "^10.0.0",
-    "log-update": "^4.0.0",
-    "node-fetch": "^2.6.1"
-  }
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eir73/inverted-index-node.git"
+  },
+  "keywords": [
+    "node.js",
+    "worker_threads",
+    "net",
+    "indexing",
+    "files"
+  ],
+  "author": "Daniil Kholodkov <kholodkov.d.y@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/eir73/inverted-index-node/issues"
+  },
+  "homepage": "https://github.com/eir73/inverted-index-node#readme"
 }
