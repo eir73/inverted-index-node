@@ -17,8 +17,8 @@ client.on("data", (data) => {
 });
 
 client.on("end", () => {
-  throw new Error('the server is closed')
-})
+  throw new Error("the server is closed");
+});
 
 function sendWord(word = "") {
   if (word) {
