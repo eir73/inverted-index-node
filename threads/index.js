@@ -5,22 +5,23 @@ const dirName = `${__dirname}/data`;
 const fileNames = fs.readdirSync(dirName);
 const filesAmount = fileNames.length;
 
-const threads = 4;
-let counter = threads;
 const buffer = {};
+
+let start = new Date()
 
 module.exports = {
   processData: (numberThreads = 1) => {
+    let counter = numberThreads;
     return new Promise((resolve, reject) => {
       try {
         for (let i = 0; i < numberThreads; i++) {
           const worker = new Worker(require.resolve("./worker.js"), {
             workerData: {
               fileNames: [...fileNames].slice(
-                (filesAmount / threads) * i,
-                i === threads - 1
+                (filesAmount / numberThreads) * i,
+                i === numberThreads - 1
                   ? filesAmount
-                  : (filesAmount / threads) * (i + 1)
+                  : (filesAmount / numberThreads) * (i + 1)
               ),
             },
           });
@@ -53,6 +54,7 @@ module.exports = {
           worker.on("exit", () => {
             counter--;
             if (counter === 0) {
+              console.log(new Date() - start)
               console.log("All threads have finished working");
               resolve(buffer);
             }
